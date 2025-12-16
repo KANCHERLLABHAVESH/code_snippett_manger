@@ -26,15 +26,7 @@ const allowedOrigins = [
   })
 );
 */
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://snippet-manager.onrender.com"
-    ],
-    credentials: true
-  })
-);
+
 app.use(
   cors({
     origin: function (origin, callback) {
