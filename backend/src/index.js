@@ -19,25 +19,30 @@ const allowedOrigins = [
   "https://snippet-manager.onrender.com"
 ];
 
-// ✅ USE CORS ONLY ONCE
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // Allow server-to-server, Postman, etc.
-      if (!origin) return callback(null, true);
+//  USE CORS ONLY ONCE
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
 
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("CORS not allowed"));
-      }
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-  })
-);
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
 
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+
+  next();
+});
 // MUST be after CORS
 app.use(express.json({ limit: "1mb" }));
 app.use(morgan("dev"));
