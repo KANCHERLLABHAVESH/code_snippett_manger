@@ -15,10 +15,20 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
 
-app.use(
+/*app.use(
   cors({
     origin: CLIENT_ORIGIN,
     credentials: true,
+  })
+);
+*/
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://snippet-manager.onrender.com"
+    ],
+    credentials: true
   })
 );
 app.use(express.json({ limit: "1mb" }));
