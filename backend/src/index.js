@@ -13,30 +13,23 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
+
 const allowedOrigins = [
   "http://localhost:5173",
   "https://snippet-manager.onrender.com"
 ];
 
-/*app.use(
-  cors({
-    origin: CLIENT_ORIGIN,
-    credentials: true,
-  })
-);
-*/
-
+// ✅ USE CORS ONLY ONCE
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin (Postman, mobile apps)
+      // Allow server-to-server, Postman, etc.
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
+        callback(null, true);
       } else {
-        return callback(new Error("CORS not allowed"));
+        callback(new Error("CORS not allowed"));
       }
     },
     credentials: true,
@@ -44,6 +37,8 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
+
+// MUST be after CORS
 app.use(express.json({ limit: "1mb" }));
 app.use(morgan("dev"));
 
@@ -68,4 +63,3 @@ connectDB()
     console.error("Failed to start server", err);
     process.exit(1);
   });
-
