@@ -2,7 +2,8 @@ import axios from "axios";
 import { useAuthContext } from "../context/AuthContext.jsx";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
+  baseURL:
+    import.meta.env.VITE_API_URL || "http://localhost:5000",
 });
 
 api.interceptors.request.use((config) => {
@@ -13,7 +14,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Small helper hook for components that want an axios instance already bound
 export const useApi = () => {
   const { token } = useAuthContext();
   if (token) {
@@ -23,4 +23,3 @@ export const useApi = () => {
 };
 
 export default api;
-
