@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     setLoading(true);
     try {
-      const { data } = await api.post("/auth/login", { email, password });
+      const { data } = await api.post("/api/auth/login", { email, password });
       setUser(data.user);
       setToken(data.token);
       return { ok: true };
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (username, email, password) => {
     setLoading(true);
     try {
-      const { data } = await api.post("/auth/register", {
+      const { data } = await api.post("/api/auth/register", {
         username,
         email,
         password,
