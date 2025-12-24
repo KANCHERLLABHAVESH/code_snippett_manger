@@ -23,7 +23,7 @@ const NODE_ENV = process.env.NODE_ENV || "development";
 // Support multiple origins from environment variable (comma-separated)
 const allowedOrigins = process.env.CLIENT_ORIGIN
   ? process.env.CLIENT_ORIGIN.split(",").map((origin) => origin.trim())
-  : ["http://localhost:5173", "https://snippett-manger.onrender.com"];
+  : ["http://localhost:5000", "https://code-snippett-manger-nt9k.onrender.com"];
 
 // Middleware
 // CORS with dynamic origin validation
